@@ -52,6 +52,7 @@ class PureHttp {
     return new Promise(resolve => {
       PureHttp.requests.push((token: string) => {
         config.headers["Authorization"] = formatToken(token);
+        config.headers["Token"] = formatToken(token);
         resolve(config);
       });
     });
@@ -90,6 +91,7 @@ class PureHttp {
                       .then(res => {
                         const token = res.data.accessToken;
                         config.headers["Authorization"] = formatToken(token);
+                        config.headers["Token"] = formatToken(token);
                         PureHttp.requests.forEach(cb => cb(token));
                         PureHttp.requests = [];
                       })
@@ -102,6 +104,7 @@ class PureHttp {
                   config.headers["Authorization"] = formatToken(
                     data.accessToken
                   );
+                  config.headers["Token"] = formatToken(data.accessToken);
                   resolve(config);
                 }
               } else {

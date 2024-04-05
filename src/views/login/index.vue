@@ -34,7 +34,7 @@ const { title } = useNav();
 
 const ruleForm = reactive({
   username: "admin",
-  password: "admin123"
+  password: "admin"
 });
 
 const onLogin = async (formEl: FormInstance | undefined) => {
@@ -43,7 +43,7 @@ const onLogin = async (formEl: FormInstance | undefined) => {
   await formEl.validate((valid, fields) => {
     if (valid) {
       useUserStoreHook()
-        .loginByUsername({ username: ruleForm.username, password: "admin123" })
+        .loginByUsername({ username: ruleForm.username, password: "admin" })
         .then(res => {
           if (res.success) {
             // 获取后端路由
@@ -100,12 +100,7 @@ onBeforeUnmount(() => {
             <h2 class="outline-none">{{ title }}</h2>
           </Motion>
 
-          <el-form
-            ref="ruleFormRef"
-            :model="ruleForm"
-            :rules="loginRules"
-            size="large"
-          >
+          <el-form ref="ruleFormRef" :model="ruleForm" size="large">
             <Motion :delay="100">
               <el-form-item
                 :rules="[

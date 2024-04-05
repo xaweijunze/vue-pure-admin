@@ -53,13 +53,13 @@ export function useNav() {
     return pureApp.getDevice;
   });
 
-  const { $storage, $config } = useGlobal<GlobalPropertiesApi>();
+  const { $storage } = useGlobal<GlobalPropertiesApi>();
   const layout = computed(() => {
     return $storage?.layout?.layout;
   });
 
   const title = computed(() => {
-    return $config.Title;
+    return "退休人员社会化管理系统";
   });
 
   /** 动态title */

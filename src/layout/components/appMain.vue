@@ -148,7 +148,7 @@ const transitionMain = defineComponent({
                   />
                 </transitionMain>
               </div>
-              <Footer v-if="!hideFooter" />
+              <!-- <Footer v-if="!hideFooter" /> -->
             </el-scrollbar>
             <div v-else class="grow">
               <transitionMain :route="route">
@@ -178,7 +178,7 @@ const transitionMain = defineComponent({
     </router-view>
 
     <!-- 页脚 -->
-    <Footer v-if="!hideFooter && !props.fixedHeader" />
+    <!-- <Footer v-if="!hideFooter && !props.fixedHeader" /> -->
   </section>
 </template>
 
