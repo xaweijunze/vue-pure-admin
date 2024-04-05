@@ -1,166 +1,56 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { onMounted } from "vue";
+import { Plus } from "@element-plus/icons-vue";
+import options from "./components/options.vue";
+import { useParams, useTableData } from "./hooks";
+import _ from "lodash";
 
-const formRef = ref();
-const options = reactive({
-  name: "",
-  no: ""
+const { params, setDefalut } = useParams();
+const { tableData } = useTableData({ params });
+
+onMounted(() => {
+  setDefalut({ name: "", no: "" });
 });
-function onSearch() {
-  console.log(options);
-}
-function resetForm(formEl: any) {
-  if (!formEl) return;
-  formEl.resetFields();
-  onSearch();
-}
-const tableData = [
-  {
-    date: "2016-05-03",
-    name: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-    tag: "Home"
-  },
-  {
-    date: "2016-05-02",
-    name: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-    tag: "Office"
-  },
-  {
-    date: "2016-05-04",
-    name: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-    tag: "Home"
-  },
-  {
-    date: "2016-05-01",
-    name: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-    tag: "Office"
-  },
-  {
-    date: "2016-05-04",
-    name: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-    tag: "Home"
-  },
-  {
-    date: "2016-05-01",
-    name: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-    tag: "Office"
-  },
-  {
-    date: "2016-05-04",
-    name: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-    tag: "Home"
-  },
-  {
-    date: "2016-05-01",
-    name: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-    tag: "Office"
-  },
-  {
-    date: "2016-05-04",
-    name: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-    tag: "Home"
-  },
-  {
-    date: "2016-05-01",
-    name: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-    tag: "Office"
-  },
-  {
-    date: "2016-05-04",
-    name: "Tom",
-    state: "California",
-    city: "Los Angeles",
-    address: "No. 189, Grove St, Los Angeles",
-    zip: "CA 90036",
-    tag: "Home"
-  }
-];
 </script>
 
 <template>
   <div class="table-base">
-    <el-form
-      ref="formRef"
-      :inline="true"
-      :model="options"
-      class="search-form bg-bg_color w-[99/100] pl-8 pt-[12px] overflow-auto"
-    >
-      <el-form-item label="角色名称：" prop="name">
-        <el-input
-          v-model="options.name"
-          placeholder="请输入角色名称"
-          clearable
-          class="!w-[180px]"
-        />
-      </el-form-item>
-      <el-form-item label="角色标识：" prop="no">
-        <el-input
-          v-model="options.no"
-          placeholder="请输入角色标识"
-          clearable
-          class="!w-[180px]"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSearch"> 搜索 </el-button>
-        <el-button @click="resetForm(formRef)"> 重置 </el-button>
-      </el-form-item>
-    </el-form>
+    <options :params="params" :setDefalut="setDefalut" />
+
     <div class="list">
-      <div class="title">退休人员信息管理</div>
-      <el-table :data="tableData" style="width: 100%">
-        <el-table-column fixed prop="date" label="Date" width="150" />
-        <el-table-column prop="name" label="Name" width="120" />
-        <el-table-column prop="state" label="State" width="120" />
-        <el-table-column prop="city" label="City" width="120" />
-        <el-table-column prop="address" label="Address" width="600" />
-        <el-table-column prop="zip" label="Zip" width="120" />
-        <el-table-column fixed="right" label="Operations" width="120">
+      <div class="header">
+        <div class="title">退休人员信息管理</div>
+        <el-button :icon="Plus" plain>新增</el-button>
+      </div>
+
+      <el-table :data="tableData.tableData" style="width: 100%">
+        <el-table-column
+          prop=""
+          label="#"
+          width="40"
+          :formatter="(row, column, cellValue, index) => String(index + 1)"
+        />
+        <el-table-column prop="name" label="姓名" width="70" />
+        <el-table-column prop="no" label="身份证号" width="180" />
+        <el-table-column prop="gender" label="性别" width="120" />
+        <el-table-column prop="age" label="年龄" width="120" />
+        <el-table-column prop="birthDate" label="出生日期" width="120" />
+        <el-table-column prop="healthStatus" label="健康状态" width="120" />
+        <el-table-column prop="managerName" label="管理人" width="120" />
+        <el-table-column
+          prop="managerPhoneNo"
+          label="管理人手机号"
+          width="120"
+        />
+        <el-table-column prop="managerType" label="管理人类型" width="120" />
+        <el-table-column fixed="right" label="操作" width="120">
           <template #default>
             <el-button link type="primary" size="small" @click="() => {}"
-              >Detail</el-button
+              >详情</el-button
             >
-            <el-button link type="primary" size="small">Edit</el-button>
+            <el-button link type="primary" size="small" @click="() => {}"
+              >编辑</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -185,10 +75,18 @@ const tableData = [
     margin-top: 10px;
     background-color: #fff;
 
-    .title {
-      padding: 12px 10px;
-      color: #606266;
-      border-bottom: 1px solid #ebeef5;
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px 0 0;
+      background-color: #fff;
+
+      .title {
+        padding: 12px 10px;
+        color: #606266;
+        border-bottom: 1px solid #ebeef5;
+      }
     }
 
     .el-table--fit {
