@@ -197,6 +197,10 @@ const transitionMain = defineComponent({
   width: 100%;
 }
 
+.grow {
+  display: flex;
+}
+
 .main-content {
   margin: 24px;
 }
